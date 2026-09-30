@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Resume Analyzer{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<nav>
+    <a class="brand" href="/">AI Resume Analyzer</a>
+    <div>
+        {% if user.is_authenticated %}
+            <span class="welcome">Hi, {{ user.username }}</span>
+            <a href="/logout/">Logout</a>
+        {% else %}
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        {% endif %}
+    </div>
+</nav>
+<main class="container">
+    {% for message in messages %}
+        <div class="message">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

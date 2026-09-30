@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Analysis Result | AI Resume Analyzer{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Resume Analysis Result</h1>
+    <p><strong>Target role:</strong> {{ analysis.job_role }}</p>
+    <div class="score">{{ analysis.match_score }}%</div>
+    <p class="center">Job-role match score</p>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h2>Detected Skills</h2>
+        {% if skills %}
+            <div class="tags">
+            {% for skill in skills %}<span>{{ skill }}</span>{% endfor %}
+            </div>
+        {% else %}
+            <p>No supported skills were detected.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>Skills to Improve</h2>
+        {% if missing %}
+            <ul>{% for skill in missing %}<li>{{ skill }}</li>{% endfor %}</ul>
+        {% else %}
+            <p>All currently tracked role skills were detected.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <h2>Next Steps</h2>
+    <p>Add projects and practical evidence for missing skills. Then update your resume and analyze it again.</p>
+    <a class="button" href="/">Analyze Another Resume</a>
+</div>
+{% endblock %}

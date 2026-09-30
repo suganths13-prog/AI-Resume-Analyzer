@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Login | AI Resume Analyzer{% endblock %}
+{% block content %}
+<div class="card auth-card">
+    <h1>Welcome Back</h1>
+    <p>Login to analyze your resume.</p>
+    <form method="post">
+        {% csrf_token %}
+        <label>Username</label>
+        <input type="text" name="username" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/register/">Create one</a></p>
+</div>
+{% endblock %}

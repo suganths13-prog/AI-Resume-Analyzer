@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | AI Resume Analyzer{% endblock %}
+{% block content %}
+<div class="hero">
+    <h1>AI Resume Analyzer</h1>
+    <p>Upload your resume and see how well it matches a target job role.</p>
+</div>
+
+{% if user.is_authenticated %}
+<div class="card">
+    <h2>Analyze Resume</h2>
+    <form action="/analyze/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Resume PDF</label>
+        <input type="file" name="resume" accept=".pdf" required>
+
+        <label>Target Job Role</label>
+        <select name="job_role" required>
+            <option value="Python Developer">Python Developer</option>
+            <option value="Django Developer">Django Developer</option>
+            <option value="Java Developer">Java Developer</option>
+            <option value="Data Analyst">Data Analyst</option>
+            <option value="Software Developer">Software Developer</option>
+            <option value="Frontend Developer">Frontend Developer</option>
+        </select>
+        {% if form.errors %}
+            <div class="errors">{{ form.errors }}</div>
+        {% endif %}
+        <button type="submit">Analyze Resume</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Your Previous Analyses</h2>
+    {% if analyses %}
+        <table>
+            <tr><th>Role</th><th>Score</th><th>Date</th></tr>
+            {% for item in analyses %}
+            <tr>
+                <td>{{ item.job_role }}</td>
+                <td>{{ item.match_score }}%</td>
+                <td>{{ item.created_at|date:"d M Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No analyses yet.</p>
+    {% endif %}
+</div>
+{% else %}
+<div class="card center">
+    <h2>Start analyzing your resume</h2>
+    <p>Create an account or login to continue.</p>
+    <a class="button" href="/register/">Get Started</a>
+</div>
+{% endif %}
+{% endblock %}
